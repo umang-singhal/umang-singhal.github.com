@@ -1,5 +1,5 @@
 ---
-layout: tags
+layout: archive
 permalink: /posts/
 title: All Posts
 author_profile: true
