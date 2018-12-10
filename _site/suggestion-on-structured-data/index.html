@@ -1,0 +1,668 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.9.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Auto-Complete suggestions from structured data using Python, Mysql, RediSearch - Umang Singhal</title>
+<meta name="description" content="Fast and easy autocomplete feature for search service on structured data">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Umang Singhal">
+<meta property="og:title" content="Auto-Complete suggestions from structured data using Python, Mysql, RediSearch">
+<meta property="og:url" content="http://localhost:4000/suggestion-on-structured-data/">
+
+
+  <meta property="og:description" content="Fast and easy autocomplete feature for search service on structured data">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/images/home-bg.jpg">
+
+
+
+
+
+  <meta property="article:published_time" content="2018-12-04T00:00:00+05:30">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/suggestion-on-structured-data/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "Umang Singhal",
+      "url": "http://localhost:4000",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Umang Singhal Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="http://localhost:4000/">Umang Singhal</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item">
+              <a href="http://localhost:4000/about/" >About</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="http://localhost:4000/posts/" >Posts</a>
+            </li>
+          
+        </ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+
+
+
+
+<div class="page__hero"
+  style=" "
+>
+  
+    <img src="http://localhost:4000/images/home-bg.jpg" alt="Auto-Complete suggestions from structured data using Python, Mysql, RediSearch" class="page__hero-image">
+  
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="http://localhost:4000/images/bio-photo.png" alt="Umang Singhal" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Umang Singhal</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Machine Learning Engineer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Bengaluru, KA</span>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:umang010894@gmail.com">
+            <meta itemprop="email" content="umang010894@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.linkedin.com/in/umangssinghal" itemprop="sameAs">
+            <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/umang-singhal" itemprop="sameAs">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Auto-Complete suggestions from structured data using Python, Mysql, RediSearch">
+    <meta itemprop="description" content="Fast and easy autocomplete feature for search service on structured data">
+    <meta itemprop="datePublished" content="December 04, 2018">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Auto-Complete suggestions from structured data using Python, Mysql, RediSearch
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  4 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> Page Items</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#contents">Contents</a>
+    <ul>
+      <li><a href="#software-stack">Software Stack</a></li>
+      <li><a href="#installation">Installation</a></li>
+      <li><a href="#load-data">Load Data</a></li>
+      <li><a href="#create-secondary-index">Create Secondary Index</a></li>
+      <li><a href="#what-is-redis">What is Redis?</a></li>
+    </ul>
+  </li>
+</ul>
+            </nav>
+          </aside>
+        
+        <p>We all love Google for its easiness to access to any document available on web. It just requires a couple of words to find the most relevant article around it. Moreover, as you start searching it even completes the words for you.</p>
+
+<p><strong>What if you can do so for records in your databases?</strong></p>
+
+<p>This article shows how we can easily create a google like search feature for searching in relational databases using secondary indexes. Secondary Indexes can be understood as metadata, which contains information about each field of every record in a database. I would be using macOs for this demonstration.</p>
+
+<p>We are going to cover the following things in this article.</p>
+<h2 id="contents">Contents</h2>
+<ul>
+  <li>Software Stack</li>
+  <li>Installation</li>
+  <li>Load Data</li>
+  <li>Create Secondary Index</li>
+  <li>What is Redis</li>
+  <li>Features</li>
+  <li>Conclusion</li>
+</ul>
+
+<h3 id="software-stack">Software Stack</h3>
+<ul>
+  <li>MySQL: Persistent storage of actual database and secondary index.</li>
+  <li>Redis: An in-memory database which helps in caching frequent searches and reduces search latency.</li>
+  <li>Docker: Containers for both Mysql and Redis for easy installation and scalability.</li>
+  <li>Python: Base coding language.</li>
+</ul>
+
+<h3 id="installation">Installation</h3>
+
+<p>Firstly you need to download <a href="https://www.docker.com/get-started">docker</a>. To check if it has installed properly, just type the following in CLI.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt; docker -v
+Docker version 18.09.0, build 4d60db4
+</code></pre></div></div>
+
+<p>After installing docker, we need to download mysql and redisearch docker containers to start. We can also you use <a href="https://kitematic.com/">kitematic</a> for easy docker container setup. Start both redis and mysql containers now.</p>
+
+<p>To have easier interaction with MySQL database, we opt for workbench <a href="https://dev.mysql.com/downloads/workbench/">community edition</a> which is free to use under GPL license. And for redis, we can use Redis Desktop Manager (RDM) which however comes with a price.</p>
+
+<h3 id="load-data">Load Data</h3>
+<p><a href="../images/auto-completion/ClassicModelsDBSchema.jpg"> <img src="../images/auto-completion/ClassicModelsDBSchema_small.jpg" alt="image-right" class="align-right" /></a></p>
+
+<p>You can find the sample database <a href="https://github.com/umang-singhal/autocomplete-structured-data">here</a>. It consists of auto-mobile sales and payment transactions from various US states. Learn more about it <a href="http://www.eclipse.org/birt/documentation/sample-database.php">here</a>.</p>
+
+<p>There are two files, in mysql directory namely <code class="highlighter-rouge">create_classicmodels.sql</code> and <code class="highlighter-rouge">load_classicmodels.sql</code> in the <a href="https://github.com/umang-singhal/autocomplete-structured-data">repository</a>, which you can use to create tables and load data into them. You can also use workbench’s import wizard for loading data into respective tables using the files in <code class="highlighter-rouge">datafiles</code> directory.</p>
+
+<h3 id="create-secondary-index">Create Secondary Index</h3>
+<p>Next, we move to creating secondary indexes of the data using <code class="highlighter-rouge">createSecondaryIndex.py</code> <a href="https://github.com/umang-singhal/autocomplete-structured-data/blob/master/createSecondaryIndex.py">script</a> in the base directory. Before that, we shall see the configurations needed for it to work.</p>
+
+<div class="language-conf highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[<span class="n">mysql</span>]
+<span class="n">USER_NAME</span> = <span class="n">root</span>
+<span class="n">PASSWORD</span> = 
+<span class="n">HOST_NAME</span> = <span class="n">localhost</span>
+<span class="n">PORT</span> = <span class="m">3306</span>
+<span class="n">DB_NAME</span> = <span class="n">birt</span>
+
+[<span class="n">sec</span>-<span class="n">index</span>]
+<span class="n">USER_NAME</span> = <span class="n">root</span>
+<span class="n">PASSWORD</span> = 
+<span class="n">HOST_NAME</span> = <span class="n">localhost</span>
+<span class="n">PORT</span> = <span class="m">3306</span>
+<span class="n">DB_NAME</span> = <span class="n">search</span>
+</code></pre></div></div>
+
+<p>We require two mysql connections, one for getting data and another for storing our secondary index. We need to make sure that the two databases mentioned are already created.</p>
+
+<p>Now, Let’s have a look at index creation and I’ll discuss each part’s functionality briefly.</p>
+<h4 id="imports">Imports</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+</code></pre></div></div>
+<p>We require <code class="highlighter-rouge">argparse</code> to parse cli argument. <code class="highlighter-rouge">Pandas</code> and <code class="highlighter-rouge">sqlalchemy</code> are used for reading data from mysql. <code class="highlighter-rouge">configparser</code> makes it easy to read configuration file within py script.</p>
+
+<h4 id="mysql-connection">MySQL Connection</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># make connection
+</span><span class="k">def</span> <span class="nf">mysql_engine</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s">"index"</span><span class="p">:</span>
+        <span class="n">mysql</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s">"sec-index"</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s">"data"</span><span class="p">:</span>
+        <span class="n">mysql</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s">"mysql"</span><span class="p">]</span>
+
+    <span class="n">user_name</span> <span class="o">=</span> <span class="n">mysql</span><span class="p">[</span><span class="s">"USER_NAME"</span><span class="p">]</span>
+    <span class="n">pwd</span> <span class="o">=</span> <span class="n">mysql</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"PASSWORD"</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+    <span class="n">host</span> <span class="o">=</span> <span class="n">mysql</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"HOST_NAME"</span><span class="p">,</span> <span class="s">"localhost"</span><span class="p">)</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="n">mysql</span><span class="p">[</span><span class="s">"PORT"</span><span class="p">]</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">mysql</span><span class="p">[</span><span class="s">"DB_NAME"</span><span class="p">]</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">f</span><span class="s">"mysql+pymysql://{user_name}:{pwd}@{host}:{port}/{db}?charset=utf8mb4"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">engine</span>
+</code></pre></div></div>
+<p><code class="highlighter-rouge">mysql_engine</code> helps to create a engine for the given <code class="highlighter-rouge">type</code> (data or index). <code class="highlighter-rouge">pymysql</code> client establishes connection with mysql database.</p>
+
+<h4 id="parsing-dataset">Parsing Dataset</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">parse_table</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="o">...</span>
+</code></pre></div></div>
+
+<p><strong>I’ll break this method in parts and explain each one individually.</strong></p>
+
+<ul>
+  <li>Create Connection to source data
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+  <span class="n">engine</span> <span class="o">=</span> <span class="n">mysql_engine</span><span class="p">(</span><span class="s">"data"</span><span class="p">)</span>
+  <span class="n">conn</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">f</span><span class="s">"Unable to connect to database.</span><span class="se">\n</span><span class="s">Error: {e}"</span><span class="p">)</span>
+  <span class="k">return</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Delete existing index records of the same source table
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># delete index if exists for the table and re-create it
+</span><span class="k">try</span><span class="p">:</span>
+  <span class="n">engine</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">f</span><span class="s">"delete from sec_index where dataset='{table}'"</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Read data into DataFrame(DF) and create an empty DF for secondary index
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">f</span><span class="s">"select * from {table} limit 10"</span><span class="p">,</span> <span class="n">conn</span><span class="p">);</span>
+<span class="n">secondary_index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">"key"</span><span class="p">,</span> <span class="s">"completion"</span><span class="p">,</span> <span class="s">"column"</span><span class="p">,</span> <span class="s">"dataset"</span><span class="p">])</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Create Index entry for each <em>column</em> and, <em>values</em> from columns with string data-type.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># idx locator
+</span><span class="o">--</span> <span class="n">Put</span> <span class="n">All</span> <span class="n">Columns</span><span class="p">,</span> <span class="n">Infer</span> <span class="n">data</span> <span class="n">types</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+  <span class="n">secondary_index</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="n">table</span><span class="p">]</span>
+  <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+<span class="o">--</span> <span class="n">iterate</span> <span class="n">over</span> <span class="n">categorical</span> <span class="n">columns</span> <span class="ow">and</span> <span class="n">add</span> <span class="n">each</span> <span class="n">value</span> <span class="n">to</span> <span class="n">index</span> <span class="n">dataframe</span>
+<span class="n">catCols</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span>
+<span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">catCols</span><span class="p">:</span>
+  <span class="n">distinct_values</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+  <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">distinct_values</span><span class="p">:</span>
+      <span class="n">keys</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+      <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+          <span class="n">secondary_index</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">table</span><span class="p">]</span>
+          <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+</code></pre></div>    </div>
+    <p>The first for-loop takes all the columns and adds it to index df. Next, we find unique values in each string based columns. We split each value on <code class="highlighter-rouge">space</code> and add one entry for each token so that we can efficiently search on sub-strings.</p>
+  </li>
+  <li>Store Index
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># store secornday index in mysql
+</span><span class="k">try</span><span class="p">:</span>
+  <span class="n">index_engine</span> <span class="o">=</span> <span class="n">mysql_engine</span><span class="p">(</span><span class="s">"index"</span><span class="p">)</span>
+  <span class="n">index_conn</span> <span class="o">=</span> <span class="n">index_engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+  <span class="n">secondary_index</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s">"sec_index"</span><span class="p">,</span> <span class="n">index_conn</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s">"append"</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">f</span><span class="s">"Unable to store index due to: {e}"</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>To run this script, We need to run <code class="highlighter-rouge">python createSecondaryIndex.py &lt;tableName&gt;</code> command on cli. The script needs to be done for each table in the database.</p>
+
+<h3 id="what-is-redis">What is Redis?</h3>
+
+<p>Redis is an open-source in-memory database which is generally used as cache or message broker system. In our application, we use it as cache to store results of frequent queries to lessen the suggestion time for auto-completion. We actually use a special module of redis called <code class="highlighter-rouge">RediSearch</code>. As the name suggests, it is a specially designed module to support various functions for search using secondary indexes. We are using the <code class="highlighter-rouge">redis 2.10.6</code> and <code class="highlighter-rouge">redisearch 0.7.1</code> versions for demo.</p>
+
+<p>I hope you find this tutorial helful.</p>
+
+<p class="text-center">…</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/tags/#auto-completion" class="page__taxonomy-item" rel="tag">auto-completion</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#mysql" class="page__taxonomy-item" rel="tag">mysql</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#redis" class="page__taxonomy-item" rel="tag">redis</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2018-12-04T00:00:00+05:30">December 04, 2018</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Auto-Complete+suggestions+from+structured+data+using+Python%2C+Mysql%2C+RediSearch%20http%3A%2F%2Flocalhost%3A4000%2Fsuggestion-on-structured-data%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fsuggestion-on-structured-data%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A4000%2Fsuggestion-on-structured-data%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fsuggestion-on-structured-data%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="http://localhost:4000/Hello-World/" class="pagination--pager" title="Woopie!
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="http://localhost:4000/Hello-World/" rel="permalink">Woopie!
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">A beginner tutorial to github pages
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+  <input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  <div id="results" class="results"></div>
+</div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="https://github.com/umang-singhal"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Umang Singhal. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="http://localhost:4000/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+
+
+
+  
+  
+  <script src="http://localhost:4000/assets/js/lunr/lunr.min.js"></script>
+  <script src="http://localhost:4000/assets/js/lunr/lunr-store.js"></script>
+  <script src="http://localhost:4000/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>

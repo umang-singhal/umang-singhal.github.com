@@ -1,4 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-12-10T20:30:59+05:30</updated><id>http://localhost:4000/feed.xml</id><title type="html">Umang Singhal</title><subtitle>Machine Learning Engineer</subtitle><author><name>Umang Singhal</name><email>umang010894@gmail.com</email></author><entry><title type="html">Auto-Complete suggestions from structured data using Python, Mysql, RediSearch</title><link href="http://localhost:4000/suggestion-on-structured-data/" rel="alternate" type="text/html" title="Auto-Complete suggestions from structured data using Python, Mysql, RediSearch" /><published>2018-12-04T00:00:00+05:30</published><updated>2018-12-04T00:00:00+05:30</updated><id>http://localhost:4000/suggestion-on-structured-data</id><content type="html" xml:base="http://localhost:4000/suggestion-on-structured-data/">We all love Google for its easiness to access to any document available on web. It just requires a couple of words to find the most relevant article around it. Moreover, as you start searching it even completes the words for you. 
+---
+title: Auto-Complete suggestions from structured data using Python, Mysql, RediSearch
+tags: [mysql, redis, auto-completion]
+excerpt: Fast and easy autocomplete feature for search service on structured data
+toc: true
+toc_sticky: true
+toc_label: Page Items
+header:
+  image: "../images/home-bg.jpg"
+---
+
+We all love Google for its easiness to access to any document available on web. It just requires a couple of words to find the most relevant article around it. Moreover, as you start searching it even completes the words for you. 
 
 **What if you can do so for records in your databases?**
 
@@ -25,7 +36,7 @@ We are going to cover the following things in this article.
 Firstly you need to download [docker](https://www.docker.com/get-started). To check if it has installed properly, just type the following in CLI.
 
 ```
-&gt;&gt; docker -v
+>> docker -v
 Docker version 18.09.0, build 4d60db4
 ```
 
@@ -34,7 +45,7 @@ After installing docker, we need to download mysql and redisearch docker contain
 To have easier interaction with MySQL database, we opt for workbench [community edition](https://dev.mysql.com/downloads/workbench/) which is free to use under GPL license. And for redis, we can use Redis Desktop Manager (RDM) which however comes with a price.
 
 ### Load Data
-&lt;a href=&quot;../images/auto-completion/ClassicModelsDBSchema.jpg&quot;&gt; ![image-right](../images/auto-completion/ClassicModelsDBSchema_small.jpg){: .align-right}&lt;/a&gt;
+<a href="../images/auto-completion/ClassicModelsDBSchema.jpg"> ![image-right](../images/auto-completion/ClassicModelsDBSchema_small.jpg){: .align-right}</a>
 
 You can find the sample database [here](https://github.com/umang-singhal/autocomplete-structured-data). It consists of auto-mobile sales and payment transactions from various US states. Learn more about it [here](http://www.eclipse.org/birt/documentation/sample-database.php).
 
@@ -75,17 +86,17 @@ We require `argparse` to parse cli argument. `Pandas` and `sqlalchemy` are used 
 ```python
 # make connection
 def mysql_engine(type):
-    if type == &quot;index&quot;:
-        mysql = conf[&quot;sec-index&quot;]
-    elif type == &quot;data&quot;:
-        mysql = conf[&quot;mysql&quot;]
+    if type == "index":
+        mysql = conf["sec-index"]
+    elif type == "data":
+        mysql = conf["mysql"]
 
-    user_name = mysql[&quot;USER_NAME&quot;]
-    pwd = mysql.get(&quot;PASSWORD&quot;, '')
-    host = mysql.get(&quot;HOST_NAME&quot;, &quot;localhost&quot;)
-    port = mysql[&quot;PORT&quot;]
-    db = mysql[&quot;DB_NAME&quot;]
-    engine = create_engine(f&quot;mysql+pymysql://{user_name}:{pwd}@{host}:{port}/{db}?charset=utf8mb4&quot;)
+    user_name = mysql["USER_NAME"]
+    pwd = mysql.get("PASSWORD", '')
+    host = mysql.get("HOST_NAME", "localhost")
+    port = mysql["PORT"]
+    db = mysql["DB_NAME"]
+    engine = create_engine(f"mysql+pymysql://{user_name}:{pwd}@{host}:{port}/{db}?charset=utf8mb4")
     return engine
 ```
 `mysql_engine` helps to create a engine for the given `type` (data or index). `pymysql` client establishes connection with mysql database.
@@ -101,10 +112,10 @@ def parse_table(table):
 * Create Connection to source data
 ```python
 try:
-    engine = mysql_engine(&quot;data&quot;)
+    engine = mysql_engine("data")
     conn = engine.connect()
 except Exception as e:
-    logger.debug(f&quot;Unable to connect to database.\nError: {e}&quot;)
+    logger.debug(f"Unable to connect to database.\nError: {e}")
     return
 ```
 
@@ -112,15 +123,15 @@ except Exception as e:
 ```python
 # delete index if exists for the table and re-create it
 try:
-    engine.execute(f&quot;delete from sec_index where dataset='{table}'&quot;)
+    engine.execute(f"delete from sec_index where dataset='{table}'")
 except Exception as e:
     logger.debug(e)
 ```
 
 * Read data into DataFrame(DF) and create an empty DF for secondary index
 ```python
-df = pd.read_sql(f&quot;select * from {table} limit 10&quot;, conn);
-secondary_index = pd.DataFrame([], columns=[&quot;key&quot;, &quot;completion&quot;, &quot;column&quot;, &quot;dataset&quot;])
+df = pd.read_sql(f"select * from {table} limit 10", conn);
+secondary_index = pd.DataFrame([], columns=["key", "completion", "column", "dataset"])
 ```
 
 * Create Index entry for each _column_ and, _values_ from columns with string data-type.
@@ -128,7 +139,7 @@ secondary_index = pd.DataFrame([], columns=[&quot;key&quot;, &quot;completion&qu
 i = 0 # idx locator
 -- Put All Columns, Infer data types
 for x in df.columns:
-    secondary_index.loc[i] = [x, x, &quot;&quot;, table]
+    secondary_index.loc[i] = [x, x, "", table]
     i+=1
 -- iterate over categorical columns and add each value to index dataframe
 catCols = df.select_dtypes(include=object).columns
@@ -146,14 +157,14 @@ The first for-loop takes all the columns and adds it to index df. Next, we find 
 ```python
 # store secornday index in mysql
 try:
-    index_engine = mysql_engine(&quot;index&quot;)
+    index_engine = mysql_engine("index")
     index_conn = index_engine.connect()
-    secondary_index.to_sql(&quot;sec_index&quot;, index_conn, if_exists=&quot;append&quot;)
+    secondary_index.to_sql("sec_index", index_conn, if_exists="append")
 except Exception as e:
-    logger.debug(f&quot;Unable to store index due to: {e}&quot;)
+    logger.debug(f"Unable to store index due to: {e}")
 ```
 
-To run this script, We need to run `python createSecondaryIndex.py &lt;tableName&gt;` command on cli. The script needs to be done for each table in the database.
+To run this script, We need to run `python createSecondaryIndex.py <tableName>` command on cli. The script needs to be done for each table in the database.
 
 ### What is Redis?
 
@@ -162,4 +173,4 @@ Redis is an open-source in-memory database which is generally used as cache or m
 I hope you find this tutorial helful.
 
 ... 
-{: .text-center}</content><author><name>Umang Singhal</name><email>umang010894@gmail.com</email></author><category term="mysql" /><category term="redis" /><category term="auto-completion" /><summary type="html">Fast and easy autocomplete feature for search service on structured data</summary></entry></feed>
+{: .text-center}
